@@ -1,12 +1,12 @@
-// import PDFWithInput from './pages/PDFWithInput'
 import PDFWithTable from './pages/PDFWithTable'
+// import PDFWithInput from './pages/PDFWithInput'
 
 function App() {
 
   return (
     <div>
-      {/* <PDFWithInput /> */}
       <PDFWithTable />
+      {/* <PDFWithInput /> */}
     </div>
   )
 }

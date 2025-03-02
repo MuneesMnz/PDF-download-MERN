@@ -5,6 +5,8 @@ import { DataTypes } from '../types/DataTypes.types'
 
 
 const PDFWithInput = () => {
+
+    // State to store input data with default values 
     const [data, setData] = useState<DataTypes>({
         name: "",
         age: null,
@@ -12,19 +14,28 @@ const PDFWithInput = () => {
         receiptId: "",
     })
 
+
+    //Function for storing input datas
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
 
         setData((prev) => ({ ...prev, [name]: value }))
     }
 
+    //Function to send input data to the backend, generate a PDF, and then fetch the generated PDF to download it.
     const downloadPDF = async () => {
         try {
+            // Send input data to the backend for PDF creation
             await axios.post("http://localhost:3000/create-pdf", data)
-                .then(() => axios.get("http://localhost:3000/fetch-pdf", { responseType: "blob" }))
+                .then(() =>
+                    // Fetch the generated PDF file from the server
+                    axios.get("http://localhost:3000/fetch-pdf",
+                        { responseType: "blob" } // Expect a binary file response
+                    ))
                 .then((res) => {
+                    // Create a blob object from the response data
                     const pdfBlob = new Blob([res.data], { type: "application/pdf" })
-
+                    // Trigger a file download with the generated PDF
                     saveAs(pdfBlob, "newPDF.pdf")
                 })
 
